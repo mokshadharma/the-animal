@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+"""automate GHES... like an animal"""
+#
+# SPDX-FileCopyrightText: @mokshadharma
+# SPDX-License-Identifier: MIT
+#
+########################################################
+
+# For command-line argument parsing:
+import click
+
+from lib.common import printerr_exit
+from lib.config import \
+    get_config, \
+    override_config
+from lib.classic_pat import create_classic_pat
+from lib.github_app import create_github_app
+from lib.org import create_org
+from lib.validate_config import validate_config
+
+
+@click.command()
+@click.option('--config-file',
+              type=click.Path(exists=True),
+              required=True)
+@click.option('--url',
+              metavar='URL',
+              required=False,
+              help='Overrides config file')
+@click.option('--username',
+              metavar='USERNAME',
+              required=False,
+              help='Overrides config file')
+@click.option('--password',
+              metavar='PASSWORD',
+              required=False,
+              help='Overrides config file')
+@click.option('--debug',
+              type=str,
+              required=False,
+              default=False,
+              is_flag=True)
+@click.option('--create',
+              type=click.Choice(
+                  ['classic-pat',
+                   'github-app',
+                   'org'],),
+              required=False)
+def cli(config_file, url, username, password, debug, create):
+    """automate GHES... like an animal"""
+    config = get_config(config_file, debug)
+    override_config(config, url, username, password, debug)
+    validate_config(config, config_file, debug)
+
+    if create == 'classic-pat':
+        create_classic_pat(config, debug)
+    elif create == 'github-app':
+        create_github_app(config, debug)
+    elif create == 'org':
+        create_org(config, debug)
+    else:
+        printerr_exit(f"Don't know how to create '{create}'")
+
+
+if __name__ == '__main__':
+    cli()  # pylint: disable=no-value-for-parameter
