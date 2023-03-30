@@ -17,6 +17,7 @@ This can be useful when you can't do the same thing through its [API](https://do
 
 - Create and return a classic [PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 - Create an [organization](https://docs.github.com/en/organizations)
+- Create a [GitHub App](https://docs.github.com/en/developers/apps)
 
 ## Limitations
 
@@ -112,6 +113,12 @@ This can be useful when you can't do the same thing through its [API](https://do
 | Python | GHES  |
 |--------|-------|
 | 3.11.2 | 3.7.6 |
+| 3.11.2 | 3.8.0 |
+
+### create app
+
+| Python | GHES  |
+|--------|-------|
 | 3.11.2 | 3.8.0 |
 
 
